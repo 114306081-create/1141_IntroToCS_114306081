@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>StudentID_HW7_1A2B</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      width: 360px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 200px;
+      padding: 8px;
+      font-size: 18px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus {
+      border-color: #4A90E2;
+    }
+
+    button {
+      padding: 9px 16px;
+      font-size: 16px;
+      color: white;
+      background: #4A90E2;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #357ABD;
+    }
+
+    #recordTitle {
+      margin-top: 25px;
+      font-weight: bold;
+      color: #444;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 4px;
+    }
+
+    #record {
+      margin-top: 10px;
+      background: #fafafa;
+      border: 1px solid #eee;
+      padding: 12px;
+      border-radius: 6px;
+      min-height: 80px;
+      white-space: pre-line;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>STUDENT_ID_HW7_1A2B</h1>
+
+  <p>請輸入 4 位不重複的數字：</p>
+
+  <input id="guessInput" maxlength="4">
+  <button onclick="play()">Guess</button>
+
+  <div id="recordTitle">猜測紀錄</div>
+  <div id="record"></div>
+</div>
+
+<script>
+// ================================
+// 產生隨機 4 位不重複答案
+// ================================
+var answer = generateAnswer();
+var attempts = 0;
+
+function generateAnswer() {
+    var digits = [];
+    var pool = ["0","1","2","3","4","5","6","7","8","9"];
+    while (digits.length < 4) {
+        var idx = Math.floor(Math.random() * pool.length);
+        digits.push(pool[idx]);
+        pool.splice(idx, 1);
+    }
+    return digits.join("");
+}
+
+// ================================
+// 驗證
+// ================================
+function isValid(str) {
+    if (str.length !== 4) return false;
+    if (!/^\d{4}$/.test(str)) return false;
+
+    var seen = {};
+    for (var i = 0; i < str.length; i++) {
+        if (seen[str[i]]) return false;
+        seen[str[i]] = true;
+    }
+    return true;
+}
+
+// ================================
+// 計算 A/B
+// ================================
+function checkAB(guess, ans) {
+    var A = 0;
+    var B = 0;
+
+    for (var i = 0; i < 4; i++) {
+        if (guess[i] === ans[i]) {
+            A++;
+        } else if (ans.includes(guess[i])) {
+            B++;
+        }
+    }
+    return A + "A" + B + "B";
+}
+
+// ================================
+// 主流程
+// ================================
+function play() {
+    var inputBox = document.getElementById("guessInput");
+    var record = document.getElementById("record");
+    var guess = inputBox.value.trim();
+
+    if (!isValid(guess)) {
+        alert("輸入無效：必須是 4 位不重複的數字");
+        inputBox.value = "";
+        return;
+    }
+
+    attempts++;
+    var result = checkAB(guess, answer);
+
+    // ★ 加上第幾次 ★
+    record.innerText += "第" + attempts + "次：" + guess + " → " + result + "\n";
+
+    if (result === "4A0B") {
+        alert("恭喜你答對了！總共猜了 " + attempts + " 次。\n答案是：" + answer);
+        inputBox.disabled = true;
+        return;
+    }
+
+    inputBox.value = "";
+}
+</script>
+
+</body>
+</html>

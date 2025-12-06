@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>114306081_Number Guessing Game</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 1rem; }
+    #resultArea { margin-top: 1rem; }
+    #resultArea img { max-width: 300px; height: auto; display:block; }
+  </style>
+</head>
+<body>
+  <h1>114306081_Number Guessing Game</h1>
+
+  <p></p>
+  <button id="startBtn">開始遊戲</button>
+
+  <div id="resultArea"></div>
+
+<script>
+(function(){
+
+  var startBtn = document.getElementById('startBtn');
+  var resultArea = document.getElementById('resultArea');
+
+  function newGame() {
+    var answer = Math.floor(Math.random() * 100) + 1;
+    var min = 1;
+    var max = 100;
+    var chancesLeft = 7;
+    var attemptsUsed = 0;
+
+    resultArea.innerHTML = "";
+
+    while (chancesLeft > 0) {
+        var promptText =
+        "請輸入 " + min + " 到 " + max + " 間的整數\n" +
+        "你還有 " + chancesLeft + " 次機會";
+
+
+      var raw = window.prompt(promptText);
+
+      if (raw === null) {
+        alert("已取消輸入，遊戲繼續。");
+        continue;
+      }
+
+      var input = raw.trim();
+
+      if (input === "" || isNaN(input)) {
+        alert("輸入無效：請輸入數字。");
+        continue;
+      }
+
+      var guessNum = Number(input);
+
+      if (!Number.isInteger(guessNum)) {
+        alert("輸入無效：請輸入整數。");
+        continue;
+      }
+
+      if (guessNum < min || guessNum > max) {
+        alert("請輸入有效範圍的數字（" + min + " ~ " + max + "）。");
+        continue;
+      }
+
+      attemptsUsed += 1;
+      chancesLeft -= 1;
+
+      if (guessNum === answer) {
+        alert("恭喜你猜對了。答案是 " + answer + "。你使用了 " + attemptsUsed + " 次嘗試。");
+        insertImage("images/correct.jpg");
+        return;
+      } else if (guessNum < answer) {
+        if (guessNum + 1 <= max) min = Math.max(min, guessNum + 1);
+      } else {
+        if (guessNum - 1 >= min) max = Math.min(max, guessNum - 1);
+      }
+
+      if (chancesLeft === 0) {
+        alert("次數用完。正確答案是 " + answer + "。");
+        insertImage("images/wrong.jpg");
+        return;
+      }
+    }
+  }
+
+  function insertImage(src, altText) {
+    resultArea.innerHTML = "";
+    var img = document.createElement("img");
+    img.src = src;
+    img.alt = altText;
+    resultArea.appendChild(img);
+  }
+
+  startBtn.addEventListener("click", newGame);
+
+})();
+</script>
+</body>
+</html>

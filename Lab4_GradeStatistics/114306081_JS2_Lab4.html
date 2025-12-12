@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grade Statistics</title>
+    <link rel="stylesheet" href="lab4.css">
+</head>
+<body>
+
+<h2>Grade Statistics</h2>
+
+<label>Math: <input type="number" id="mathInput"></label>
+<label>English: <input type="number" id="engInput"></label>
+<button id="submitBtn">Submit</button>
+
+<table id="gradeTable" border="1">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Math</th>
+            <th>English</th>
+            <th>Average</th>
+        </tr>
+    </thead>
+
+    <tbody id="tableBody"></tbody>
+
+    <tfoot>
+        <tr>
+            <td>Average</td>   <!-- 你要的字 -->
+            <td id="mathAvg">-</td>
+            <td id="engAvg">-</td>
+            <td id="overallAvg">-</td>
+        </tr>
+    </tfoot>
+</table>
+
+
+<script src="lab4.js"></script>
+</body>
+</html>

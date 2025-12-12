@@ -1,0 +1,15 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+table {
+    margin-top: 20px;
+    width: 300px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+input {
+    width: 80px;
+    margin-right: 10px;
+}

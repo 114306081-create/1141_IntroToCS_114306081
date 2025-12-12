@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+label {
+    margin-top: 10px;
+}
+
+input, select {
+    margin-bottom: 10px;
+}
+
+.orange-btn {
+    background-color: orange;
+    border: none;
+    padding: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
